@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
+import helmet from "helmet";
 import dotenv from 'dotenv';
 dotenv.config();
 const app = express();
@@ -31,6 +32,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(helmet());
 
 //Routes declarations
 const baseAPI = '/api'
