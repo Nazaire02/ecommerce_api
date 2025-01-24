@@ -1,4 +1,6 @@
 import User from "../models/user.js";
+import bcrypt from 'bcrypt';
+const saltRounds = 10;
 
 export async function register(req, res){
     const body = req.body;
@@ -6,13 +8,19 @@ export async function register(req, res){
         let newUser = new User({
             name: body.name,
             email: body.email,
-            password: body.password,
+            password: bcrypt.hashSync(body.password, saltRounds),
             role: body.role
         });
         newUser = await newUser.save();
-        return res.status(201).json(newUser)
+        return res.status(201).json({
+            isSuccess: true,
+            newUser
+        })
     } catch (error) {
-        console.log(error)
-        return res.status(500).json({ message: 'Error registering user', error })
+        return res.status(500).json({ 
+            message: 'Error registering user', 
+            error,
+            isSuccess: false
+        })
     }
 }
