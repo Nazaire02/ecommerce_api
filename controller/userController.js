@@ -65,3 +65,19 @@ export async function login(req, res) {
         })
     }
 }
+
+export async function getAll(req, res){
+    try {
+        const users = await User.find();
+        res.status(200).json({
+            users: users,
+            message: "Liste de tous les users"
+        })
+    } catch (error) {
+        console.log(error) 
+        res.status(500).json({
+            message:"Une erreur s'est produite",
+            error
+        }) 
+    }
+}
