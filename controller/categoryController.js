@@ -59,3 +59,23 @@ export async function getOne(req, res){
         });
     }
 }
+
+export async function update(req, res) {
+    try {
+        const {categoryId, label} = req.body;
+        const category = await Category.findOneAndUpdate(
+            {_id: categoryId},
+            {label},
+            { new: true, runValidators: true } 
+        );
+        return res.status(200).json({
+            isSucces: true,
+            category,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            isSucces: false,
+            message: "Error updating category"
+        });
+    }
+}
