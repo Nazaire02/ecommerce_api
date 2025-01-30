@@ -67,9 +67,19 @@ export async function login(req, res) {
 }
 
 export async function getAll(req, res){
-    // const userId = req.userId;
-    // console.log(userId)
+    const userId = req.userId;
     try {
+        const isAdmin = await  User.findOne({
+            _id: userId,
+            role:"admin"
+        });
+
+        if (!isAdmin) {
+            res.status(401).json({
+                message: "Unauthorized"
+            });
+        }
+
         const users = await User.find();
         res.status(200).json({
             users: users,
