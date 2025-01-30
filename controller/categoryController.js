@@ -79,3 +79,20 @@ export async function update(req, res) {
         });
     }
 }
+
+export async function remove(req, res){
+    try {
+        const {categoryId} = req.body;
+        await Category.deleteOne(
+            {_id: categoryId},
+        );
+        return res.status(200).json({
+            isSucces: true,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            isSucces: false,
+            message: "Error deleting category"
+        });
+    }
+}
