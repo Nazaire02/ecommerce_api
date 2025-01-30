@@ -39,3 +39,23 @@ export async function getAll(req, res) {
         });
     }
 }
+
+export async function getOne(req, res){
+    try {
+        const categoryId = req.params.id;
+        const userId = req.userId;
+        const category = await Category.findOne({
+            _id: categoryId,
+            user: userId
+        })
+        return res.status(200).json({
+            isSucces: true,
+            category,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            isSucces: false,
+            message: "Error getting category"
+        });
+    }
+}
