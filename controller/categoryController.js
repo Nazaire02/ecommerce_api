@@ -20,3 +20,22 @@ export async function add(req, res) {
         });
     }
 }
+
+export async function getAll(req, res) {
+    const userId = req.userId;
+    try {
+        const categories = await Category.find({
+            user: userId
+        })
+
+        return res.status(200).json({
+            isSucces: true,
+            categories,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            isSucces: false,
+            message: "Error getting categories"
+        });
+    }
+}
