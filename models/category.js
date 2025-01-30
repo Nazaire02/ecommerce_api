@@ -3,7 +3,8 @@ const { Schema } = mongoose;
 
 const categorySchema = new Schema(
     {
-        label: { type: String, required: true }
+        label: { type: String, required: true },
+        user: { type: mongoose.Schema.Types.ObjectId, ref:"user", required: true}
     },
     {
         timestamps: true
@@ -11,3 +12,5 @@ const categorySchema = new Schema(
 )
 
 const Category = mongoose.model('Category', categorySchema)
+
+export default Category;

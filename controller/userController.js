@@ -67,6 +67,8 @@ export async function login(req, res) {
 }
 
 export async function getAll(req, res){
+    // const userId = req.userId;
+    // console.log(userId)
     try {
         const users = await User.find();
         res.status(200).json({

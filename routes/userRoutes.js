@@ -5,6 +5,6 @@ const userRoutes = express.Router();
 
 userRoutes.post('/register', register);
 userRoutes.post('/login', login);
-userRoutes.get('/getAll',verifyToken, getAll);
+userRoutes.get('/get-all',verifyToken, getAll);
 
 export default userRoutes;
