@@ -1,22 +1,29 @@
 import Category from "../models/category.js";
+import Product from "../models/product.js";
 
 export async function add(req, res) {
     const userId = req.userId;
     try {
-        const {label} = req.body;
-        const newCategory = new Category({
-            label: label,
-            user: userId
+        const {name, price, category, description} = req.body
+        const {filename} = req.file
+        const newProduct = new Product({
+            name,
+            price,
+            category,
+            description,
+            stock: 0,
+            user: userId,
+            image: filename
         })
-        await newCategory.save();
+        await newProduct.save();
         return res.status(201).json({
             isSucces: true,
-            message: "La catégorie a été enregistrée avec succès"
+            message: "Success"
         });
     } catch (error) {
         return res.status(500).json({
             isSucces: false,
-            message: "Error creating category"
+            message: "Error creating product"
         });
     }
 }
