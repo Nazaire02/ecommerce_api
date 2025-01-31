@@ -10,6 +10,7 @@ const port = process.env.PORT || 8081;
 //routes import
 import userRoutes from './routes/userRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
+import productRoutes from './routes/productRoutes.js';
 
 //database connection
 if (process.env.NODE_ENV === 'prod') {
@@ -39,6 +40,7 @@ app.use(helmet());
 const baseAPI = '/api'
 app.use(`${baseAPI}/users`, userRoutes)
 app.use(`${baseAPI}/category`, categoryRoutes)
+app.use(`${baseAPI}/product`, productRoutes)
 
 app.listen(port, () => {
     console.log(`Express started on port ${port}`)
