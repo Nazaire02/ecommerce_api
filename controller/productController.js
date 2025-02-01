@@ -31,38 +31,38 @@ export async function add(req, res) {
 export async function getAll(req, res) {
     const userId = req.userId;
     try {
-        const categories = await Category.find({
+        const products = await Product.find({
             user: userId
         })
 
         return res.status(200).json({
             isSucces: true,
-            categories,
+            products,
         });
     } catch (error) {
         return res.status(500).json({
             isSucces: false,
-            message: "Error getting categories"
+            message: "Error getting products"
         });
     }
 }
 
 export async function getOne(req, res){
     try {
-        const categoryId = req.params.id;
+        const productId = req.params.id;
         const userId = req.userId;
-        const category = await Category.findOne({
-            _id: categoryId,
+        const product = await Product.findOne({
+            _id: productId,
             user: userId
         })
         return res.status(200).json({
             isSucces: true,
-            category,
+            product,
         });
     } catch (error) {
         return res.status(500).json({
             isSucces: false,
-            message: "Error getting category"
+            message: "Error getting product"
         });
     }
 }
