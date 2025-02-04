@@ -2,6 +2,7 @@ import User from "../models/user.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import Cart from "../models/cart.js";
 dotenv.config();
 
 export async function register(req, res) {
@@ -23,6 +24,14 @@ export async function register(req, res) {
             role
         });
         newUser = await newUser.save();
+
+        if (newUser?.role === "user") {
+            //Here we initialize the user's basket
+            const userCart = new Cart({
+                userId: newUser._id
+            })
+            await userCart.save();
+        }
         return res.status(201).json({
             isSuccess: true,
             newUser
