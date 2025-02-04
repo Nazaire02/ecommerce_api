@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import express from "express";
 import verifyToken from "../middlewares/verifyToken.js";
 import { add, getAll, getOne, remove, update } from "../controller/categoryController.js";
