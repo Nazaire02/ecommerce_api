@@ -1,4 +1,3 @@
-import Category from "../models/category.js";
 import Product from "../models/product.js";
 import fs from "fs";
 import path from "path";
@@ -76,20 +75,40 @@ export async function getOne(req, res){
 
 export async function update(req, res) {
     try {
-        const {categoryId, label} = req.body;
-        const category = await Category.findOneAndUpdate(
-            {_id: categoryId},
-            {label},
+        const {name, price, description, stock, category} = req.body;
+        let filename;
+        const product = await Product.findById(req.params.id)
+
+        if (req.file) {
+            const filePath = path.resolve(__dirname, "..", "uploadImg", product.image);
+            if (fs.existsSync(filePath)) {
+                await fs.promises.unlink(filePath);
+            }
+            filename =  req.file.filename
+        }else{
+            filename = product.image
+        }
+        const productUpdated = await Product.findOneAndUpdate(
+            {_id: req.params.id},
+            {
+                name,
+                price,
+                description,
+                stock,
+                category,
+                image: filename
+            },
             { new: true, runValidators: true } 
         );
         return res.status(200).json({
             isSucces: true,
-            category,
+            productUpdated,
         });
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             isSucces: false,
-            message: "Error updating category"
+            message: "Error updating product"
         });
     }
 }
@@ -103,7 +122,6 @@ export async function remove(req, res) {
 
         if (product.image) { 
             const filePath = path.resolve(__dirname, "..", "uploadImg", product.image);
-            console.log(filePath)
             if (fs.existsSync(filePath)) {
                 await fs.promises.unlink(filePath);
             }
