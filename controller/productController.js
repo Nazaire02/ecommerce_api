@@ -1,5 +1,12 @@
 import Category from "../models/category.js";
 import Product from "../models/product.js";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 export async function add(req, res) {
     const userId = req.userId;
@@ -87,19 +94,31 @@ export async function update(req, res) {
     }
 }
 
-export async function remove(req, res){
+export async function remove(req, res) {
     try {
-        const {categoryId} = req.body;
-        await Category.deleteOne(
-            {_id: categoryId},
-        );
+        const product = await Product.findById(req.params.id);
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        if (product.image) { 
+            const filePath = path.resolve(__dirname, "..", "uploadImg", product.image);
+            console.log(filePath)
+            if (fs.existsSync(filePath)) {
+                await fs.promises.unlink(filePath);
+            }
+        }
+
+        await Product.deleteOne({ _id: req.params.id });
+
         return res.status(200).json({
-            isSucces: true,
+            isSuccess: true,
         });
     } catch (error) {
+        console.error("Error deleting product:", error);
         return res.status(500).json({
-            isSucces: false,
-            message: "Error deleting category"
+            isSuccess: false,
+            message: "Error deleting product"
         });
     }
 }
