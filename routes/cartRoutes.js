@@ -1,11 +1,12 @@
 import express from "express";
 import verifyToken from "../middlewares/verifyToken.js";
-import { add, getAll, getOne } from "../controller/categoryController.js";
+import { add, getOne } from "../controller/categoryController.js";
+import { getAll } from "../controller/cartController.js";
 
 const cartRoutes = express.Router();
 
 cartRoutes.get("/get-all", verifyToken, getAll);
-cartRoutes.get("/get-one/:id", verifyToken, getOne);
-cartRoutes.post("/update-items", verifyToken, add);
+cartRoutes.get("/get-user-cart/:userId", verifyToken, getOne);
+cartRoutes.patch("/update-items/:userId", verifyToken, add);
 
 export default cartRoutes;
