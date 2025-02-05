@@ -1,4 +1,5 @@
 import { Order, ORDER_STATUS } from "../models/order.js";
+import User from "../models/user.js";
 
 export async function add(req, res) {
     const userId = req.userId;
@@ -25,6 +26,30 @@ export async function add(req, res) {
         return res.status(500).json({
             isSucces: false,
             message: "Error creating order"
+        });
+    }
+}
+
+export async function getAll(req, res) {
+    try {
+        const user = await User.findById(req.userId)
+
+        if (user.role !== "admin") {
+            return res.status(403).json({
+                isSucces: false,
+                message: "Unauthorized"
+            });
+        }
+
+        const orders = await Order.find();
+        return res.status(201).json({
+            isSucces: true,
+            orders
+        });
+    } catch (error) {
+        return res.status(500).json({
+            isSucces: false,
+            message: "Error getting orders"
         });
     }
 }
