@@ -7,7 +7,7 @@ const orderRoutes = express.Router();
 
 orderRoutes.post("/add", verifyToken, add);
 orderRoutes.get("/get-all", verifyToken, getAll);
-orderRoutes.get("/get-all-user", verifyToken, getAll);
+orderRoutes.get("/get-all-by-user", verifyToken, getAll);
 orderRoutes.get("/get-one/:id", verifyToken, getOne);
 orderRoutes.patch("/update/:id", verifyToken, update);
 orderRoutes.delete("/delete/:id", verifyToken, remove);
