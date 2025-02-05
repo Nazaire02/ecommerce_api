@@ -53,3 +53,18 @@ export async function getAll(req, res) {
         });
     }
 }
+
+export async function getAllByUser(req, res) {
+    try {
+        const orders = await Order.find({user: req.userId});
+        return res.status(201).json({
+            isSucces: true,
+            orders
+        });
+    } catch (error) {
+        return res.status(500).json({
+            isSucces: false,
+            message: "Error getting orders"
+        });
+    }
+}
