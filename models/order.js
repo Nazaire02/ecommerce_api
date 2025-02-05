@@ -1,6 +1,13 @@
 import mongoose from "mongoose";
 const {Schema} = mongoose;
 
+const ORDER_STATUS = {
+   CANCELED: "canceled",
+   PENDING: "pending",
+   SHIPPED: "shipped",
+ };
+ 
+
 const orderSchema = new Schema(
      {
          user: {type: mongoose.Schema.Types.ObjectId, ref:"user", required: true},
@@ -8,9 +15,15 @@ const orderSchema = new Schema(
             {
                product: { type: mongoose.Schema.Types.ObjectId, ref: "product", required: true},
                quantity: { type: Number, required: true, default: 1},
-               priceUnit: { type: String, required: true}
+               priceUnit: { type: Number, required: true}
             }
-         ]
+         ],
+         status: {
+            type: String, 
+            required: true,
+            enum: ["canceled", "pending", "shipped"]
+         },
+         total: { type: Number, required: true}
      },
      {
         timestamps: true
@@ -18,4 +31,4 @@ const orderSchema = new Schema(
 )
 
 const Order = mongoose.model('Order', orderSchema)
-export default Order;
+export {Order, ORDER_STATUS};

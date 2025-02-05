@@ -13,6 +13,7 @@ import userRoutes from './routes/userRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 
 //database connection
 if (process.env.NODE_ENV === 'prod') {
@@ -45,6 +46,7 @@ app.use(`${baseAPI}/users`, userRoutes)
 app.use(`${baseAPI}/category`, categoryRoutes)
 app.use(`${baseAPI}/product`, productRoutes)
 app.use(`${baseAPI}/cart`, cartRoutes)
+app.use(`${baseAPI}/order`, orderRoutes)
 
 app.listen(port, () => {
     console.log(`Express started on port ${port}`)

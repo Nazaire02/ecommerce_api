@@ -1,6 +1,7 @@
 import express from "express";
 import verifyToken from "../middlewares/verifyToken.js";
-import { add, getAll, getOne, remove, update } from "../controller/categoryController.js";
+import {  getAll, getOne, remove, update } from "../controller/categoryController.js";
+import { add } from "../controller/orderController.js";
 
 const orderRoutes = express.Router();
 
@@ -8,7 +9,7 @@ orderRoutes.post("/add", verifyToken, add);
 orderRoutes.get("/get-all", verifyToken, getAll);
 orderRoutes.get("/get-all-user", verifyToken, getAll);
 orderRoutes.get("/get-one/:id", verifyToken, getOne);
-orderRoutes.patch("/update", verifyToken, update);
-orderRoutes.delete("/delete", verifyToken, remove);
+orderRoutes.patch("/update/:id", verifyToken, update);
+orderRoutes.delete("/delete/:id", verifyToken, remove);
 
 export default orderRoutes;
