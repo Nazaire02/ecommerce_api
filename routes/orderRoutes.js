@@ -1,7 +1,7 @@
 import express from "express";
 import verifyToken from "../middlewares/verifyToken.js";
-import {  remove, update } from "../controller/categoryController.js";
-import { add, getAll, getAllByUser, getOne } from "../controller/orderController.js";
+import {  remove } from "../controller/categoryController.js";
+import { add, getAll, getAllByUser, getOne, update } from "../controller/orderController.js";
 
 const orderRoutes = express.Router();
 

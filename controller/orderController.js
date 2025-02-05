@@ -83,3 +83,28 @@ export async function getOne(req, res) {
         });
     }
 }
+
+export async function update(req, res) {
+    try {
+        const {products, status} = req.body;
+        const total = products?.reduce((totalPrice, product) => totalPrice + product.quantity * product.priceUnit, 0)
+        const orderUpdated = await Order.findOneAndUpdate(
+            {_id: req.params.id},
+            {
+                products, 
+                status,
+                total
+            },
+            { new: true, runValidators: true}
+        );
+        return res.status(201).json({
+            isSucces: true,
+            orderUpdated
+        });
+    } catch (error) {
+        return res.status(500).json({
+            isSucces: false,
+            message: "Error updating order"
+        });
+    }
+}
