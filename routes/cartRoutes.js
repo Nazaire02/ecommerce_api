@@ -5,7 +5,7 @@ import { getAll, getCartByUser, updateItems } from "../controller/cartController
 const cartRoutes = express.Router();
 
 cartRoutes.get("/get-all", verifyToken, getAll);
-cartRoutes.get("/get-user-cart/:userId", verifyToken, getCartByUser);
-cartRoutes.patch("/update-items/:userId", verifyToken, updateItems);
+cartRoutes.get("/get-user-cart", verifyToken, getCartByUser);
+cartRoutes.patch("/update-items", verifyToken, updateItems);
 
 export default cartRoutes;

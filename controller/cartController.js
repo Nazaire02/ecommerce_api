@@ -21,7 +21,7 @@ export async function getAll(req, res) {
 
 export async function getCartByUser(req, res) {
     try {
-        const cart = await Cart.findOne({user: req.params.userId}) 
+        const cart = await Cart.findOne({user: req.userId}) 
                                 .populate("user")
                                 .populate("items.product");
 
@@ -41,7 +41,7 @@ export async function updateItems(req, res) {
     const {items} = req.body;
     try {
         const cartUpdated = await Cart.findOneAndUpdate(
-            {user: req.params.userId},
+            {user: req.userId},
             {items},
             { new: true, runValidators: true } 
         ) 
