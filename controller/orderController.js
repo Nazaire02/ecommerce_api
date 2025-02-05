@@ -68,3 +68,18 @@ export async function getAllByUser(req, res) {
         });
     }
 }
+
+export async function getOne(req, res) {
+    try {
+        const order = await Order.findById(req.params.id);
+        return res.status(201).json({
+            isSucces: true,
+            order
+        });
+    } catch (error) {
+        return res.status(500).json({
+            isSucces: false,
+            message: "Error getting order"
+        });
+    }
+}
