@@ -36,3 +36,23 @@ export async function getCartByUser(req, res) {
         });
     }
 }
+
+export async function updateItems(req, res) {
+    const {items} = req.body;
+    try {
+        const cartUpdated = await Cart.findOneAndUpdate(
+            {user: req.params.userId},
+            {items},
+            { new: true, runValidators: true } 
+        ) 
+        return res.status(200).json({
+            isSucces: true,
+            cartUpdated,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            isSucces: false,
+            message: "Error updating cart"
+        });
+    }
+}
