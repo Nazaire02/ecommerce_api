@@ -2,6 +2,7 @@ import Product from "../models/product.js";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { Order } from "../models/order.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -114,7 +115,16 @@ export async function update(req, res) {
 }
 
 export async function remove(req, res) {
-    try {
+    try { 
+        const hasOrderedYet = await Order.findOne({
+            "products.product": req.params.id
+        })
+        if (hasOrderedYet) {
+            return res.status(409).json({
+                isSuccess: false,
+                message: "This product cannot be deleted because it has already been ordered."
+            });
+        }
         const product = await Product.findById(req.params.id);
         if (!product) {
             return res.status(404).json({ message: "Product not found" });

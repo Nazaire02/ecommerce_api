@@ -111,7 +111,7 @@ export async function update(req, res) {
 
 export async function remove(req, res) {
     try {
-        const orderDeleted = await Order.findOneAndUpdate(
+        await Order.findOneAndUpdate(
             {_id: req.params.id},
             {
                 status: ORDER_STATUS.CANCELED,
