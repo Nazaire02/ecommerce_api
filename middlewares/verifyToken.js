@@ -4,7 +4,7 @@ import User from "../models/user.js";
 dotenv.config();
 
 export default async function verifyToken(req, res, next){
-    const token = req.header('Authorization').split(" ")[1];
+    const token = req.header('Authorization')?.split(" ")[1];
     if (!token) {
         return res.status(403).json({ error: 'Access denied' })
     }

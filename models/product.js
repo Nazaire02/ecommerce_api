@@ -10,6 +10,7 @@ const productSchema = new Schema(
         image: { type: String, required: true },
         stock: { type: Number, required: true },
         user: { type: mongoose.Schema.Types.ObjectId, ref:'User', required: true },
+        status: { type: Boolean, required: true, default: true}
     },
     {
         timestamps: true

@@ -143,10 +143,32 @@ export async function remove(req, res) {
             isSuccess: true,
         });
     } catch (error) {
-        console.error("Error deleting product:", error);
         return res.status(500).json({
             isSuccess: false,
             message: "Error deleting product"
+        });
+    }
+}
+
+export async function toggleStatus(req, res) {
+    try {
+        const productUpdated = await Product.findOneAndUpdate(
+            {
+                _id: req.params.id,
+                user: req.userId
+            },
+            {status: req.body.status},
+            {new: true, runValidators: true}
+        )
+
+        return res.status(200).json({
+            isSuccess: true,
+            productUpdated
+        });
+    } catch (error) {
+        return res.status(500).json({
+            isSuccess: false,
+            message: "Error changing status product"
         });
     }
 }
