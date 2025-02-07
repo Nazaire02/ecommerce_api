@@ -1,3 +1,4 @@
+import Cart from "../models/cart.js";
 import { Order, ORDER_STATUS } from "../models/order.js";
 import User from "../models/user.js";
 
@@ -18,6 +19,14 @@ export async function add(req, res) {
             status: ORDER_STATUS.PENDING
         })
         await newOrder.save();
+
+        await Cart.findOneAndUpdate(
+            {user: userId},
+            {
+                items:[]
+            }
+        );
+        
         return res.status(201).json({
             isSucces: true,
             message: "Succès"
