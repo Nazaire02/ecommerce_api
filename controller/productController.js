@@ -35,12 +35,28 @@ export async function add(req, res) {
     }
 }
 
-export async function getAll(req, res) {
+export async function getAllByUser(req, res) {
     const userId = req.userId;
     try {
         const products = await Product.find({
             user: userId
         })
+
+        return res.status(200).json({
+            isSucces: true,
+            products,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            isSucces: false,
+            message: "Error getting products"
+        });
+    }
+}
+
+export async function getAll(req, res) {
+    try {
+        const products = await Product.find()
 
         return res.status(200).json({
             isSucces: true,
