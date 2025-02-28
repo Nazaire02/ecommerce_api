@@ -50,25 +50,25 @@ export async function login(req, res) {
         const { email, password } = req.body;
         const user = await User.findOne({email});
         if (!user) {
-            res.status(401).json({
+            return res.status(401).json({
                 message: "Indentifiants incorrects"
             })
         }
         const passwordMatch = bcrypt.compareSync(password, user.password);
         if (!passwordMatch) {
-            res.status(401).json({
+        return res.status(401).json({
                 message: "Indentifiants incorrects"
             })
         }
         const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY, {
             expiresIn: '1h',
         });
-        res.status(200).json({
+        return res.status(200).json({
             user,
             token
         })
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             message:"Une erreur s'est produite",
             error
         })

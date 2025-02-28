@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import helmet from "helmet";
 import dotenv from 'dotenv';
-import path from "path"
+
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 8081;
