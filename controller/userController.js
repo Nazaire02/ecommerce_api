@@ -104,8 +104,36 @@ async function getAll(req, res){
     }
 }
 
+
+async function deleteUser(req, res) {
+    try {
+        const userId = req.params.id;
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+                isSuccess: false
+            });
+        }
+        await User.deleteOne({ _id: userId });
+
+        return res.status(200).json({
+            message: "User deleted successfully",
+            isSuccess: true
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "Error deleting user",
+            error,
+            isSuccess: false
+        });
+    }
+}
+
 module.exports = {
     register,
     login,
-    getAll
+    getAll,
+    deleteUser
 }

@@ -51,3 +51,5 @@ app.use(`${baseAPI}/order`, orderRoutes)
 app.listen(port, () => {
     console.log(`Express started on port ${port}`)
 })
+
+module.exports = app;
