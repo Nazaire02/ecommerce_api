@@ -1,7 +1,7 @@
-import express from "express";
-import verifyToken from "../middlewares/verifyToken.js";
-import { add, getAll, getAllByUser, getOne, remove, toggleStatus, update } from "../controller/productController.js";
-import upload from "../middlewares/savePicture.js";
+const express = require("express");
+const verifyToken = require("../middlewares/verifyToken.js");
+const { add, getAll, getAllByUser, getOne, remove, toggleStatus, update } = require("../controller/productController.js");
+const upload = require("../middlewares/savePicture.js");
 
 const productRoutes = express.Router();
 
@@ -13,4 +13,4 @@ productRoutes.patch("/update/:id", verifyToken,upload.single('productImg'), upda
 productRoutes.delete("/delete/:id", verifyToken, remove);
 productRoutes.patch("/toggle-status/:id", verifyToken, toggleStatus);
 
-export default productRoutes; 
+module.exports = productRoutes;

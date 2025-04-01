@@ -1,6 +1,6 @@
-import Cart from "../models/cart.js";
+const Cart = require("../models/cart.js");
 
-export async function getAll(req, res) {
+async function getAll(req, res) {
     try {
         //get only carts which have items
         const carts = await Cart.find({items: {$exists: true, $not: { $size: 0 }}}) 
@@ -19,7 +19,7 @@ export async function getAll(req, res) {
     }
 }
 
-export async function getCartByUser(req, res) {
+async function getCartByUser(req, res) {
     try {
         const cart = await Cart.findOne({user: req.userId}) 
                                 .populate("user")
@@ -37,7 +37,7 @@ export async function getCartByUser(req, res) {
     }
 }
 
-export async function updateItems(req, res) {
+async function updateItems(req, res) {
     const {items} = req.body;
     try {
         const cartUpdated = await Cart.findOneAndUpdate(
@@ -55,4 +55,10 @@ export async function updateItems(req, res) {
             message: "Error updating cart"
         });
     }
+}
+
+module.exports = {
+    getAll,
+    getCartByUser,
+    updateItems
 }

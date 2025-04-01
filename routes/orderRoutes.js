@@ -1,6 +1,6 @@
-import express from "express";
-import verifyToken from "../middlewares/verifyToken.js";
-import { add, getAll, getAllByUser, getOne, update, remove } from "../controller/orderController.js";
+const express = require("express");
+const verifyToken = require("../middlewares/verifyToken.js");
+const { add, getAll, getAllByUser, getOne, update, remove } = require("../controller/orderController.js");
 
 const orderRoutes = express.Router();
 
@@ -11,4 +11,4 @@ orderRoutes.get("/get-one/:id", verifyToken, getOne);
 orderRoutes.patch("/update/:id", verifyToken, update);
 orderRoutes.delete("/delete/:id", verifyToken, remove);
 
-export default orderRoutes;
+module.exports = orderRoutes;

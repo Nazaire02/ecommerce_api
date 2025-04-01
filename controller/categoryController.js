@@ -1,6 +1,6 @@
-import Category from "../models/category.js";
+const Category = require("../models/category.js")
 
-export async function add(req, res) {
+async function add(req, res) {
     const userId = req.userId;
     try {
         const {label} = req.body;
@@ -21,7 +21,7 @@ export async function add(req, res) {
     }
 }
 
-export async function getAll(req, res) {
+async function getAll(req, res) {
     try {
         const categories = await Category.find()
 
@@ -37,7 +37,7 @@ export async function getAll(req, res) {
     }
 }
 
-export async function getAllByUser(req, res) {
+async function getAllByUser(req, res) {
     const userId = req.userId;
     try {
         const categories = await Category.find({
@@ -56,7 +56,7 @@ export async function getAllByUser(req, res) {
     }
 }
 
-export async function getOne(req, res){
+async function getOne(req, res){
     try {
         const categoryId = req.params.id;
         const userId = req.userId;
@@ -76,7 +76,7 @@ export async function getOne(req, res){
     }
 }
 
-export async function update(req, res) {
+async function update(req, res) {
     try {
         const {categoryId, label} = req.body;
         const category = await Category.findOneAndUpdate(
@@ -96,7 +96,8 @@ export async function update(req, res) {
     }
 }
 
-export async function remove(req, res){
+
+async function remove(req, res){
     try {
         const {categoryId} = req.body;
         await Category.deleteOne(
@@ -111,4 +112,13 @@ export async function remove(req, res){
             message: "Error deleting category"
         });
     }
+}
+
+module.exports = {
+    add,
+    getAll,
+    getAllByUser,
+    getOne,
+    update,
+    remove
 }

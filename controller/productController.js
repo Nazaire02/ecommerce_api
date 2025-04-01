@@ -1,14 +1,10 @@
-import Product from "../models/product.js";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import { Order } from "../models/order.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const Product = require("../models/product.js");
+const fs = require("fs");
+const path = require("path");
+const Order = require("../models/order.js");
 
 
-export async function add(req, res) {
+async function add(req, res) {
     const userId = req.userId;
     try {
         const {name, price, category, description} = req.body
@@ -35,7 +31,7 @@ export async function add(req, res) {
     }
 }
 
-export async function getAllByUser(req, res) {
+async function getAllByUser(req, res) {
     const userId = req.userId;
     try {
         const products = await Product.find({
@@ -54,7 +50,7 @@ export async function getAllByUser(req, res) {
     }
 }
 
-export async function getAll(req, res) {
+async function getAll(req, res) {
     try {
         const products = await Product.find()
 
@@ -70,7 +66,7 @@ export async function getAll(req, res) {
     }
 }
 
-export async function getOne(req, res){
+async function getOne(req, res){
     try {
         const productId = req.params.id;
         const userId = req.userId;
@@ -90,7 +86,7 @@ export async function getOne(req, res){
     }
 }
 
-export async function update(req, res) {
+async function update(req, res) {
     try {
         const {name, price, description, stock, category} = req.body;
         let filename;
@@ -130,7 +126,7 @@ export async function update(req, res) {
     }
 }
 
-export async function remove(req, res) {
+async function remove(req, res) {
     try { 
         const hasOrderedYet = await Order.findOne({
             "products.product": req.params.id
@@ -166,7 +162,7 @@ export async function remove(req, res) {
     }
 }
 
-export async function toggleStatus(req, res) {
+async function toggleStatus(req, res) {
     try {
         const productUpdated = await Product.findOneAndUpdate(
             {
@@ -187,4 +183,14 @@ export async function toggleStatus(req, res) {
             message: "Error changing status product"
         });
     }
+}
+
+module.exports = {
+    add,
+    getAllByUser,
+    getAll,
+    getOne,
+    update,
+    remove,
+    toggleStatus
 }

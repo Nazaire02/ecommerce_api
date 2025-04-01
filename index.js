@@ -1,19 +1,19 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import cors from 'cors'
-import helmet from "helmet";
-import dotenv from 'dotenv';
+const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
+const helmet = require('helmet')
+const dotenv = require('dotenv')
 
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 8081;
 
 //routes import
-import userRoutes from './routes/userRoutes.js';
-import categoryRoutes from './routes/categoryRoutes.js';
-import productRoutes from './routes/productRoutes.js';
-import cartRoutes from './routes/cartRoutes.js';
-import orderRoutes from './routes/orderRoutes.js';
+const userRoutes = require('./routes/userRoutes.js');
+const categoryRoutes = require('./routes/categoryRoutes.js');
+const productRoutes = require('./routes/productRoutes.js');
+const cartRoutes = require('./routes/cartRoutes.js');
+const orderRoutes = require('./routes/orderRoutes.js');
 
 //database connection
 if (process.env.NODE_ENV === 'prod') {

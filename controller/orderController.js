@@ -1,8 +1,9 @@
-import Cart from "../models/cart.js";
-import { Order, ORDER_STATUS } from "../models/order.js";
-import User from "../models/user.js";
 
-export async function add(req, res) {
+const {Order, ORDER_STATUS} = require("../models/order.js");
+const User = require("../models/user.js");
+const Cart = require("../models/cart.js");
+
+async function add(req, res) {
     const userId = req.userId;
     try {
         const {products} = req.body;
@@ -39,7 +40,7 @@ export async function add(req, res) {
     }
 }
 
-export async function getAll(req, res) {
+async function getAll(req, res) {
     try {
         const user = await User.findById(req.userId)
 
@@ -63,7 +64,7 @@ export async function getAll(req, res) {
     }
 }
 
-export async function getAllByUser(req, res) {
+async function getAllByUser(req, res) {
     try {
         const orders = await Order.find({user: req.userId});
         return res.status(201).json({
@@ -78,7 +79,7 @@ export async function getAllByUser(req, res) {
     }
 }
 
-export async function getOne(req, res) {
+async function getOne(req, res) {
     try {
         const order = await Order.findById(req.params.id);
         return res.status(201).json({
@@ -93,7 +94,7 @@ export async function getOne(req, res) {
     }
 }
 
-export async function update(req, res) {
+async function update(req, res) {
     try {
         const {products, status} = req.body;
         const total = products?.reduce((totalPrice, product) => totalPrice + product.quantity * product.priceUnit, 0)
@@ -118,7 +119,7 @@ export async function update(req, res) {
     }
 }
 
-export async function remove(req, res) {
+async function remove(req, res) {
     try {
         await Order.findOneAndUpdate(
             {_id: req.params.id},
@@ -137,4 +138,13 @@ export async function remove(req, res) {
             message: "Error deleting order"
         });
     }
+}
+
+module.exports = {
+    add,
+    getAll,
+    getAllByUser,
+    getOne,
+    update,
+    remove
 }

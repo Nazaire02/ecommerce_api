@@ -1,11 +1,12 @@
-import User from "../models/user.js";
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-import Cart from "../models/cart.js";
+const User = require("../models/user.js");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+const Cart = require("../models/cart.js");
+
 dotenv.config();
 
-export async function register(req, res) {
+async function register(req, res) {
     try {
         const saltRounds = 10;
         const { name, email, password, role } = req.body;
@@ -45,7 +46,7 @@ export async function register(req, res) {
     }
 }
 
-export async function login(req, res) {
+async function login(req, res) {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({email});
@@ -75,7 +76,7 @@ export async function login(req, res) {
     }
 }
 
-export async function getAll(req, res){
+async function getAll(req, res){
     const userId = req.userId;
     try {
         const isAdmin = await  User.findOne({
@@ -101,4 +102,10 @@ export async function getAll(req, res){
             error
         }) 
     }
+}
+
+module.exports = {
+    register,
+    login,
+    getAll
 }
